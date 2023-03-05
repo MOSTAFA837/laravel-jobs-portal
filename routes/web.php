@@ -9,9 +9,11 @@ use App\Http\Controllers\Admin\AdminJobCategoryController;
 
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\TermsController;
+use App\Http\Controllers\Front\JobCategoryController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/terms', [TermsController::class, 'index'])->name('terms');
+Route::get('/job-categories', [JobCategoryController::class, 'categories'])->name('job_categories');
 
 // Admin
 Route::middleware(['admin:admin'])->group(function () {
