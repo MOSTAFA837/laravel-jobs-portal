@@ -53,8 +53,12 @@
                 </ul>
             </li>
 
-            <li class=""><a class="nav-link" href="setting.html"><i class="fas fa-hand-point-right"></i>
-                    <span>Setting</span></a></li>
+            <li class="{{ Request::is('admin/why-choose/*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin_why_choose_item') }}">
+                    <i class="fas fa-hand-point-right"></i>
+                    <span>Why Choose Items</span>
+                </a>
+            </li>
 
             <li class=""><a class="nav-link" href="form.html"><i class="fas fa-hand-point-right"></i>
                     <span>Form</span></a></li>
