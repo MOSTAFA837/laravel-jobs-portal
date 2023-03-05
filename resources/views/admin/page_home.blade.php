@@ -48,7 +48,6 @@
                                 </div>
                                 <div class="col-lg-9 col-md-12">
                                     <div class="tab-content" id="v-pills-tabContent">
-
                                         <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
                                             aria-labelledby="v-pills-1-tab" tabindex="0">
                                             <!-- Search Section Start -->
@@ -126,22 +125,24 @@
                                                     <div class="mb-4">
                                                         <label class="form-label">Heading *</label>
                                                         <input type="text" class="form-control"
-                                                            name="job_category_heading" value="">
+                                                            name="job_category_heading"
+                                                            value="{{ $page_home_data->job_category_heading }}">
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Sub Heading</label>
                                                         <input type="text" class="form-control"
-                                                            name="job_category_subheading" value="">
+                                                            name="job_category_subheading"
+                                                            value="{{ $page_home_data->job_category_subheading }}">
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Status *</label>
-                                                        <select name="job_category_status" class="form-control select2">
-                                                            {{-- <option value="Show"
-                                                                @if ($page_home_data->job_category_status == 'Show') selected @endif>Show
+                                                        <select name="job_category_status" class="form-control">
+                                                            <option value="show"
+                                                                @if ($page_home_data->job_category_status == 'show') selected @endif>Show
                                                             </option>
-                                                            <option value="Hide"
-                                                                @if ($page_home_data->job_category_status == 'Hide') selected @endif>Hide
-                                                            </option> --}}
+                                                            <option value="hide"
+                                                                @if ($page_home_data->job_category_status == 'hide') selected @endif>Hide
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -182,7 +183,7 @@
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Status *</label>
-                                                        <select name="why_choose_status" class="form-control select2">
+                                                        <select name="why_choose_status" class="form-control">
                                                             {{-- <option value="Show"
                                                                 @if ($page_home_data->why_choose_status == 'Show') selected @endif>Show
                                                             </option>
@@ -215,7 +216,7 @@
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Status *</label>
-                                                        <select name="featured_jobs_status" class="form-control select2">
+                                                        <select name="featured_jobs_status" class="form-control">
                                                             {{-- <option value="Show"
                                                                 @if ($page_home_data->featured_jobs_status == 'Show') selected @endif>Show
                                                             </option>
@@ -257,7 +258,7 @@
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Status *</label>
-                                                        <select name="testimonial_status" class="form-control select2">
+                                                        <select name="testimonial_status" class="form-control">
                                                             {{-- <option value="Show"
                                                                 @if ($page_home_data->testimonial_status == 'Show') selected @endif>Show
                                                             </option>
@@ -290,7 +291,7 @@
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Status *</label>
-                                                        <select name="blog_status" class="form-control select2">
+                                                        <select name="blog_status" class="form-control">
                                                             {{-- <option value="Show"
                                                                 @if ($page_home_data->blog_status == 'Show') selected @endif>Show
                                                             </option>
@@ -339,11 +340,8 @@
                                         <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </div>
-
                             </div>
-
                         </form>
-
                     </div>
                 </div>
             </div>
