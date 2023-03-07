@@ -160,18 +160,20 @@
                                                     <div class="mb-4">
                                                         <label class="form-label">Heading *</label>
                                                         <input type="text" class="form-control"
-                                                            name="why_choose_heading" value="">
+                                                            name="why_choose_heading"
+                                                            value="{{ $page_home_data->why_choose_heading }}">
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Sub Heading</label>
                                                         <input type="text" class="form-control"
-                                                            name="why_choose_subheading" value="">
+                                                            name="why_choose_subheading"
+                                                            value="{{ $page_home_data->why_choose_subheading }}">
                                                     </div>
-                                                    <div class="mb-4">
+                                                    {{-- <div class="mb-4">
                                                         <label class="form-label">Existing Background *</label>
                                                         <div>
-                                                            {{-- <img src="{{ asset('uploads/' . $page_home_data->why_choose_background) }}"
-                                                                alt="" class="w_300"> --}}
+                                                            <img src="{{ asset('uploads/' . $page_home_data->why_choose_background) }}"
+                                                                alt="" class="w_300">
                                                         </div>
                                                     </div>
                                                     <div class="mb-4">
@@ -180,16 +182,18 @@
                                                             <input type="file" class="form-control mt_10"
                                                                 name="why_choose_background">
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="mb-4">
                                                         <label class="form-label">Status *</label>
                                                         <select name="why_choose_status" class="form-control">
-                                                            {{-- <option value="Show"
-                                                                @if ($page_home_data->why_choose_status == 'Show') selected @endif>Show
+                                                            <option value="show"
+                                                                @if ($page_home_data->why_choose_status == 'show') selected @endif>
+                                                                Show
                                                             </option>
-                                                            <option value="Hide"
-                                                                @if ($page_home_data->why_choose_status == 'Hide') selected @endif>Hide
-                                                            </option> --}}
+                                                            <option value="hide"
+                                                                @if ($page_home_data->why_choose_status == 'hide') selected @endif>
+                                                                Hide
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -207,22 +211,24 @@
                                                     <div class="mb-4">
                                                         <label class="form-label">Heading *</label>
                                                         <input type="text" class="form-control"
-                                                            name="featured_jobs_heading" value="">
+                                                            name="featured_jobs_heading"
+                                                            value="{{ $page_home_data->featured_jobs_heading }}">
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Sub Heading</label>
                                                         <input type="text" class="form-control"
-                                                            name="featured_jobs_subheading" value="">
+                                                            name="featured_jobs_subheading"
+                                                            value="{{ $page_home_data->featured_jobs_subheading }}">
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Status *</label>
                                                         <select name="featured_jobs_status" class="form-control">
-                                                            {{-- <option value="Show"
+                                                            <option value="Show"
                                                                 @if ($page_home_data->featured_jobs_status == 'Show') selected @endif>Show
                                                             </option>
                                                             <option value="Hide"
                                                                 @if ($page_home_data->featured_jobs_status == 'Hide') selected @endif>Hide
-                                                            </option> --}}
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>

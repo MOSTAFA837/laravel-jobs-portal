@@ -26,6 +26,8 @@ class AdminHomePageController extends Controller
             'search' => 'required',
             'job_category_heading' => 'required',
             'job_category_status' => 'required',
+            'featured_jobs_heading' => 'required',
+            'featured_jobs_subheading' => 'required',
         ]);
 
         if ($request->hasFile('background')) {
@@ -53,6 +55,10 @@ class AdminHomePageController extends Controller
         $home_page_data->job_category_heading = $request->job_category_heading;
         $home_page_data->job_category_subheading = $request->job_category_subheading;
         $home_page_data->job_category_status = $request->job_category_status;
+
+        $home_page_data->featured_jobs_heading = $request->featured_jobs_heading;
+        $home_page_data->featured_jobs_subheading = $request->featured_jobs_subheading;
+        $home_page_data->featured_jobs_status = $request->featured_jobs_status;
 
         $home_page_data->update();
 

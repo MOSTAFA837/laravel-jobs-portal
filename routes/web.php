@@ -11,10 +11,14 @@ use App\Http\Controllers\Admin\AdminWhyChooseController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\TermsController;
 use App\Http\Controllers\Front\JobCategoryController;
+use App\Http\Controllers\Front\LoginController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/terms', [TermsController::class, 'index'])->name('terms');
 Route::get('/job-categories', [JobCategoryController::class, 'categories'])->name('job_categories');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/signup', [LoginController::class, 'signup'])->name('signup');
+Route::get('/forget-password', [LoginController::class, 'forgetPassword'])->name('forget_password');
 
 // Admin
 Route::middleware(['admin:admin'])->group(function () {

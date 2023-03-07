@@ -129,7 +129,7 @@
     @endif
 
 
-    <div class="why-choose" style="background-image: url(uploads/banner3.jpg)">
+    {{-- <div class="why-choose" style="background-image: url(uploads/banner3.jpg)">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -158,7 +158,7 @@
                 @endforeach
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <div class="job">
@@ -353,7 +353,7 @@
 
 
 
-    <div class="testimonial" style="background-image: url(uploads/banner11.jpg)">
+    {{-- <div class="testimonial" style="background-image: url(uploads/banner11.jpg)">
         <div class="bg"></div>
         <div class="container">
             <div class="row">
@@ -408,10 +408,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
-    <div class="blog">
+    {{-- <div class="blog">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -495,5 +495,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
