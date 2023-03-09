@@ -41,6 +41,7 @@
                                 </button>
                             </li>
                         </ul>
+
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                 aria-labelledby="pills-home-tab" tabindex="0">
@@ -76,9 +77,10 @@
                                     </div>
                                 </form>
                             </div>
+
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                                 aria-labelledby="pills-profile-tab" tabindex="0">
-                                <form action="" method="post">
+                                <form action="{{ route('company_signup_submit') }}" method="post">
                                     @csrf
                                     <div class="mb-3">
                                         <label for="" class="form-label">Company Name *</label>

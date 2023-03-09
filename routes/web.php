@@ -20,6 +20,9 @@ Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/signup', [LoginController::class, 'signup'])->name('signup');
 Route::get('/forget-password', [LoginController::class, 'forgetPassword'])->name('forget_password');
 
+Route::post('signup-company', [LoginController::class, 'companySignupSubmit'])->name('company_signup_submit');
+Route::get('company_signup_verify/{token}/{email}', [LoginController::class, 'companySignupVerify'])->name('company_signup_verify');
+
 // Admin
 Route::middleware(['admin:admin'])->group(function () {
     Route::get('/admin/home', [AdminHomeController::class, 'index'])->name('admin_home');
