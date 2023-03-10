@@ -13,17 +13,38 @@ use App\Http\Controllers\Front\TermsController;
 use App\Http\Controllers\Front\JobCategoryController;
 use App\Http\Controllers\Front\LoginController;
 
+use App\Http\Controllers\Company\CompanyController;
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/terms', [TermsController::class, 'index'])->name('terms');
 Route::get('/job-categories', [JobCategoryController::class, 'categories'])->name('job_categories');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/signup', [LoginController::class, 'signup'])->name('signup');
-Route::get('/forget-password', [LoginController::class, 'forgetPassword'])->name('forget_password');
 
-Route::post('signup-company', [LoginController::class, 'companySignupSubmit'])->name('company_signup_submit');
+Route::get('/company/forget-password', [LoginController::class, 'companyForgetPassword'])->name('company_forget_password');
+Route::post('/company/forget-password-submit', [LoginController::class, 'companyForgetPasswordSubmit'])->name('company_forget_password_submit');
+Route::get('company/reset-password/{token}/{email}', [LoginController::class, 'companyResetPassword'])->name('company_reset_password');
+Route::post('company/reset-password-submit', [LoginController::class, 'companyResetPasswordSubmit'])->name('company_reset_password_submit');
+
+// Company
+Route::post('login_company_submit', [LoginController::class, 'companyLoginSubmit'])->name('company_login_submit');
+Route::post('signup_company_submit', [LoginController::class, 'companySignupSubmit'])->name('company_signup_submit');
 Route::get('company_signup_verify/{token}/{email}', [LoginController::class, 'companySignupVerify'])->name('company_signup_verify');
+Route::get('/company/logout', [LoginController::class, 'companyLogout'])->name('company_logout');
+
+Route::middleware(['company:company'])->group(function () {
+    Route::get('/company/dashboard', [CompanyController::class, 'dashboard'])->name('company_dashboard');
+});
 
 // Admin
+Route::get('/admin/login', [AdminLoginController::class, 'login'])->name('admin_login');
+Route::post('/admin/login-submit', [AdminLoginController::class, 'login_submit'])->name('admin_login_submit');
+Route::get('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin_logout');
+Route::get('/admin/forget-password', [AdminLoginController::class, 'forget_password'])->name('admin_forget_password');
+Route::post('/admin/forget-password-submit', [AdminLoginController::class, 'forget_password_submit'])->name('admin_forget_password_submit');
+Route::get('/admin/reset-password/{token}/{email}', [AdminLoginController::class, 'reset_password'])->name('admin_reset_password');
+Route::post('/admin/reset-password-submit', [AdminLoginController::class, 'reset_password_submit'])->name('admin_reset_password_submit');
+
 Route::middleware(['admin:admin'])->group(function () {
     Route::get('/admin/home', [AdminHomeController::class, 'index'])->name('admin_home');
 
@@ -47,11 +68,3 @@ Route::middleware(['admin:admin'])->group(function () {
     Route::post('/admin/why-choose/update/{id}', [AdminWhyChooseController::class, 'update'])->name('admin_why_choose_item_update');
     Route::get('/admin/why-choose/delete/{id}', [AdminWhyChooseController::class, 'delete'])->name('admin_why_choose_item_delete');
 });
-
-Route::get('/admin/login', [AdminLoginController::class, 'login'])->name('admin_login');
-Route::post('/admin/login-submit', [AdminLoginController::class, 'login_submit'])->name('admin_login_submit');
-Route::get('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin_logout');
-Route::get('/admin/forget-password', [AdminLoginController::class, 'forget_password'])->name('admin_forget_password');
-Route::post('/admin/forget-password-submit', [AdminLoginController::class, 'forget_password_submit'])->name('admin_forget_password_submit');
-Route::get('/admin/reset-password/{token}/{email}', [AdminLoginController::class, 'reset_password'])->name('admin_reset_password');
-Route::post('/admin/reset-password-submit', [AdminLoginController::class, 'reset_password_submit'])->name('admin_reset_password_submit');

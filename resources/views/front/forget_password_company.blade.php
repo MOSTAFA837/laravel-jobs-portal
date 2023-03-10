@@ -20,7 +20,7 @@
             <div class="row justify-content-center">
                 <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
                     <div class="login-form">
-                        <form action="" method="post">
+                        <form action="{{ route('company_forget_password_submit') }}" method="post">
                             @csrf
                             <div class="mb-3">
                                 <label for="" class="form-label">Email Address</label>

@@ -21,7 +21,7 @@ class LoginController extends Controller
         return view('front.signup');
     }
 
-    // Company Functions
+    // Company Auth Functions
     public function companySignupSubmit(Request $request)
     {
         $request->validate([
@@ -76,8 +76,100 @@ class LoginController extends Controller
             ->with('success', 'Your email verified successfully. Login to your profile');
     }
 
-    public function forgetPassword()
+    public function companyLoginSubmit(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credential = [
+            'username' => $request->username,
+            'password' => $request->password,
+        ];
+
+        if (Auth::guard('company')->attempt($credential)) {
+            return redirect()->route('company_dashboard');
+        } else {
+            return redirect()
+                ->route('login')
+                ->with('error', 'Informations are not correct!');
+        }
+    }
+
+    public function companyLogout()
+    {
+        Auth::guard('company')->logout();
+
+        return redirect()->route('login');
+    }
+
+    public function companyForgetPassword()
     {
         return view('front.forget_password_company');
+    }
+
+    public function companyForgetPasswordSubmit(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $company_data = Company::where('email', $request->email)->first();
+
+        if (!$company_data) {
+            return redirect()
+                ->back()
+                ->with('error', 'Email address not found!');
+        }
+
+        $token = hash('sha256', time());
+
+        $company_data->token = $token;
+        $company_data->update();
+
+        $reset_link = url('company/reset-password/' . $token . '/' . $request->email);
+        $subject = 'Reset Password';
+        $message = 'Please click on the following link to reset your password <br>';
+        $message .= '<a href="' . $reset_link . '">Reset Password</a>';
+
+        \Mail::to($request->email)->send(new Websitemail($subject, $message));
+
+        return redirect()
+            ->route('login')
+            ->with('success', 'To reset your password. Please check your email and follow the steps there.');
+    }
+
+    public function companyResetPassword($token, $email)
+    {
+        $company_data = Company::where('token', $token)
+            ->where('email', $email)
+            ->first();
+
+        if (!$company_data) {
+            return redirect()->route('login');
+        }
+
+        return view('front.reset_password_company', compact('token', 'email'));
+    }
+
+    public function companyResetPasswordSubmit(Request $request)
+    {
+        $request->validate([
+            'password' => 'required',
+            'retype_password' => 'required|same:password',
+        ]);
+
+        $company_data = Company::where('token', $request->token)
+            ->where('email', $request->email)
+            ->first();
+
+        $company_data->password = Hash::make($request->password);
+        $company_data->token = '';
+        $company_data->update();
+
+        return redirect()
+            ->route('login')
+            ->with('success', 'You have reset your password successfully');
     }
 }
