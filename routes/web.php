@@ -15,16 +15,13 @@ use App\Http\Controllers\Front\LoginController;
 
 use App\Http\Controllers\Company\CompanyController;
 
+use App\Http\Controllers\Candidate\CandidateController;
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/terms', [TermsController::class, 'index'])->name('terms');
 Route::get('/job-categories', [JobCategoryController::class, 'categories'])->name('job_categories');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/signup', [LoginController::class, 'signup'])->name('signup');
-
-Route::get('/company/forget-password', [LoginController::class, 'companyForgetPassword'])->name('company_forget_password');
-Route::post('/company/forget-password-submit', [LoginController::class, 'companyForgetPasswordSubmit'])->name('company_forget_password_submit');
-Route::get('company/reset-password/{token}/{email}', [LoginController::class, 'companyResetPassword'])->name('company_reset_password');
-Route::post('company/reset-password-submit', [LoginController::class, 'companyResetPasswordSubmit'])->name('company_reset_password_submit');
 
 // Company
 Route::post('login_company_submit', [LoginController::class, 'companyLoginSubmit'])->name('company_login_submit');
@@ -32,8 +29,28 @@ Route::post('signup_company_submit', [LoginController::class, 'companySignupSubm
 Route::get('company_signup_verify/{token}/{email}', [LoginController::class, 'companySignupVerify'])->name('company_signup_verify');
 Route::get('/company/logout', [LoginController::class, 'companyLogout'])->name('company_logout');
 
+Route::get('/company/forget-password', [LoginController::class, 'companyForgetPassword'])->name('company_forget_password');
+Route::post('/company/forget-password-submit', [LoginController::class, 'companyForgetPasswordSubmit'])->name('company_forget_password_submit');
+Route::get('company/reset-password/{token}/{email}', [LoginController::class, 'companyResetPassword'])->name('company_reset_password');
+Route::post('company/reset-password-submit', [LoginController::class, 'companyResetPasswordSubmit'])->name('company_reset_password_submit');
+
 Route::middleware(['company:company'])->group(function () {
     Route::get('/company/dashboard', [CompanyController::class, 'dashboard'])->name('company_dashboard');
+});
+
+// Candidate
+Route::post('login_candidate_submit', [LoginController::class, 'candidateLoginSubmit'])->name('candidate_login_submit');
+Route::post('signup_candidate_submit', [LoginController::class, 'candidateSignupSubmit'])->name('candidate_signup_submit');
+Route::get('candidate_signup_verify/{token}/{email}', [LoginController::class, 'candidateSignupVerify'])->name('candidate_signup_verify');
+Route::get('candidate/logout', [LoginController::class, 'candidateLogout'])->name('candidate_logout');
+
+Route::get('candidate/forget-password', [LoginController::class, 'candidateForgetPassword'])->name('candidate_forget_password');
+Route::post('candidate/forget-password-submit', [LoginController::class, 'candidateForgetPasswordSubmit'])->name('candidate_forget_password_submit');
+Route::get('candidate/reset-password/{token}/{email}', [LoginController::class, 'candidateResetPassword'])->name('candidate_reset_password');
+Route::post('candidate/reset-password-submit', [LoginController::class, 'candidateResetPasswordSubmit'])->name('candidate_reset_password_submit');
+
+Route::middleware(['candidate:candidate'])->group(function () {
+    Route::get('candidate/dashboard', [candidateController::class, 'dashboard'])->name('candidate_dashboard');
 });
 
 // Admin
