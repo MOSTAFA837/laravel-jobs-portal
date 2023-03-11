@@ -60,8 +60,12 @@
                 </a>
             </li>
 
-            <li class=""><a class="nav-link" href="form.html"><i class="fas fa-hand-point-right"></i>
-                    <span>Form</span></a></li>
+            <li class="{{ Request::is('admin/package/*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin_package') }}">
+                    <i class="fas fa-hand-point-right"></i>
+                    <span>Package</span>
+                </a>
+            </li>
 
             <li class=""><a class="nav-link" href="table.html"><i class="fas fa-hand-point-right"></i>
                     <span>Table</span></a></li>
