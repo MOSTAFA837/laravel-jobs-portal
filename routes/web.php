@@ -40,6 +40,7 @@ Route::post('company/reset-password-submit', [LoginController::class, 'companyRe
 Route::middleware(['company:company'])->group(function () {
     Route::get('/company/dashboard', [CompanyController::class, 'dashboard'])->name('company_dashboard');
     Route::get('/company/make-payment', [CompanyController::class, 'makePayment'])->name('company_make_payment');
+    Route::get('/company/orders', [CompanyController::class, 'orders'])->name('company_orders');
 
     Route::post('/company/paypal/payment', [CompanyController::class, 'paypal'])->name('company_paypal');
     Route::get('/company/paypal/success', [CompanyController::class, 'paypal_success'])->name('company_paypal_success');
