@@ -39,7 +39,7 @@
             </li>
 
             <li
-                class="nav-item dropdown {{ (Request::is('admin/job-category/*') ? 'active' : '' || Request::is('admin/job-location/*')) ? 'active' : '' }}">
+                class="nav-item dropdown {{ ((Request::is('admin/job-category/*') ? 'active' : '' || Request::is('admin/job-type/*')) ? 'active' : '' || Request::is('admin/job-location/*')) ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown">
                     <i class="fas fa-hand-point-right"></i>
                     <span>Job Section</span>
@@ -55,6 +55,12 @@
                         <a class="nav-link" href="{{ route('admin_job_location') }}">
                             <i class="fas fa-angle-right"></i>
                             Job Location
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('admin/job-type/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin_job_type') }}">
+                            <i class="fas fa-angle-right"></i>
+                            Job Type
                         </a>
                     </li>
                 </ul>
