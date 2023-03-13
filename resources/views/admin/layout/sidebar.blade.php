@@ -77,6 +77,12 @@
                             Job Experience
                         </a>
                     </li>
+                    <li class="{{ Request::is('admin/job-gender/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin_job_gender') }}">
+                            <i class="fas fa-angle-right"></i>
+                            Job Gender
+                        </a>
+                    </li>
                 </ul>
             </li>
 
