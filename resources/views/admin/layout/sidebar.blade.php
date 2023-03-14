@@ -84,6 +84,22 @@
                 </ul>
             </li>
 
+            <li class="nav-item dropdown {{ Request::is('admin/company-location/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown">
+                    <i class="fas fa-hand-point-right"></i>
+                    <span>Company Section</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('admin/company-location/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin_company_location') }}">
+                            <i class="fas fa-angle-right"></i>
+                            Location
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
             <li class="{{ Request::is('admin/why-choose/*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin_why_choose_item') }}">
                     <i class="fas fa-hand-point-right"></i>
