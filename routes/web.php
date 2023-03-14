@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\AdminJobGenderController;
 use App\Http\Controllers\Admin\AdminJobSalaryRangeController;
 use App\Http\Controllers\Admin\AdminCompanyLocationController;
 use App\Http\Controllers\Admin\AdminCompanyIndustryController;
+use App\Http\Controllers\Admin\AdminCompanySizeController;
 
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\TermsController;
@@ -160,4 +161,11 @@ Route::middleware(['admin:admin'])->group(function () {
     Route::get('/admin/company-industry/edit/{id}', [AdminCompanyIndustryController::class, 'edit'])->name('admin_company_industry_edit');
     Route::post('/admin/company-industry/update/{id}', [AdminCompanyIndustryController::class, 'update'])->name('admin_company_industry_update');
     Route::get('/admin/company-industry/delete/{id}', [AdminCompanyIndustryController::class, 'delete'])->name('admin_company_industry_delete');
+
+    Route::get('/admin/company-size/view', [AdminCompanySizeController::class, 'index'])->name('admin_company_size');
+    Route::get('/admin/company-size/create', [AdminCompanySizeController::class, 'create'])->name('admin_company_size_create');
+    Route::post('/admin/company-size/store', [AdminCompanySizeController::class, 'store'])->name('admin_company_size_store');
+    Route::get('/admin/company-size/edit/{id}', [AdminCompanySizeController::class, 'edit'])->name('admin_company_size_edit');
+    Route::post('/admin/company-size/update/{id}', [AdminCompanySizeController::class, 'update'])->name('admin_company_size_update');
+    Route::get('/admin/company-size/delete/{id}', [AdminCompanySizeController::class, 'delete'])->name('admin_company_size_delete');
 });

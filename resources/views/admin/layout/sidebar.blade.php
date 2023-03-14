@@ -103,6 +103,12 @@
                             Industry
                         </a>
                     </li>
+                    <li class="{{ Request::is('admin/company-size/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin_company_size') }}">
+                            <i class="fas fa-angle-right"></i>
+                            Size
+                        </a>
+                    </li>
                 </ul>
             </li>
 
