@@ -57,6 +57,9 @@ Route::middleware(['company:company'])->group(function () {
     Route::post('/company/stripe/payment', [CompanyController::class, 'stripe'])->name('company_stripe');
     Route::get('/company/stripe/success', [CompanyController::class, 'stripe_success'])->name('company_stripe_success');
     Route::get('/company/stripe/cancel', [CompanyController::class, 'stripe_cancel'])->name('company_stripe_cancel');
+
+    Route::get('company/edit-profile', [CompanyController::class, 'edit_profile'])->name('company_edit_profile');
+    Route::post('company/edit-profile-update', [CompanyController::class, 'edit_profile_update'])->name('company_edit_profile_update');
 });
 
 // Candidate
