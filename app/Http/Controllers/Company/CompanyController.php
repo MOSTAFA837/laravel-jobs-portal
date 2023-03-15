@@ -12,6 +12,7 @@ use App\Models\Package;
 use App\Models\Company;
 use App\Models\CompanyLocation;
 use App\Models\CompanyIndustry;
+use App\Models\CompanyPhoto;
 use App\Models\CompanySize;
 
 use Auth;
@@ -102,6 +103,77 @@ class CompanyController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Profile is updated successfully.');
+    }
+
+    public function photos()
+    {
+        $order_data = Order::where('company_id', Auth::guard('company')->user()->id)
+            ->where('currently_active', 1)
+            ->first();
+
+        if (!$order_data) {
+            return redirect()
+                ->back()
+                ->with('error', 'You have to buy a package first to access the photo section.');
+        }
+
+        $package_data = Package::where('id', $order_data->package_id)->first();
+
+        if ($package_data->total_allowed_photos == 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'Your current package does not allow to access the photo section.');
+        }
+
+        $photos = CompanyPhoto::where('company_id', Auth::guard('company')->user()->id)->get();
+        return view('company.photos', compact('photos'));
+    }
+
+    public function photos_submit(Request $request)
+    {
+        $order_data = Order::where('company_id', Auth::guard('company')->user()->id)
+            ->where('currently_active', 1)
+            ->first();
+
+        $package_data = Package::where('id', $order_data->package_id)->first();
+
+        $existing_photos_number = CompanyPhoto::where('company_id', Auth::guard('company')->user()->id)->count();
+
+        if ($package_data->total_allowed_photos == $existing_photos_number) {
+            return redirect()
+                ->back()
+                ->with('error', 'Maximum number of photos are uploaded. upgrade your package to upload more photos.');
+        }
+
+        $request->validate([
+            'photo' => 'image|mimes:jpg,jpeg,png,gif',
+        ]);
+
+        $obj = new CompanyPhoto();
+
+        $ext = $request->file('photo')->extension();
+        $final_name = 'company_photo_' . time() . '.' . $ext;
+        $request->file('photo')->move(public_path('uploads/'), $final_name);
+
+        $obj->photo = $final_name;
+        $obj->company_id = Auth::guard('company')->user()->id;
+        $obj->save();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Photo has been added successfully.');
+    }
+
+    public function photos_delete($id)
+    {
+        $single_photo = CompanyPhoto::where('id', $id)->first();
+
+        unlink(public_path('uploads/' . $single_photo->photo));
+        CompanyPhoto::where('id', $id)->delete();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Photo has been deleted successfully');
     }
 
     public function makePayment()
