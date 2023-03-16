@@ -16,6 +16,7 @@ use App\Models\CompanyPhoto;
 use App\Models\CompanySize;
 
 use Auth;
+use Hash;
 
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
@@ -103,6 +104,28 @@ class CompanyController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Profile is updated successfully.');
+    }
+
+    public function edit_password()
+    {
+        return view('company.edit_password');
+    }
+
+    public function edit_password_update(Request $request)
+    {
+        $request->validate([
+            'password' => 'required',
+            'retype_password' => 'required|same:password',
+        ]);
+
+        $obj = Company::where('id', Auth::guard('company')->user()->id)->first();
+
+        $obj->password = Hash::make($request->password);
+        $obj->update();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Your password has been updated successfully');
     }
 
     public function photos()

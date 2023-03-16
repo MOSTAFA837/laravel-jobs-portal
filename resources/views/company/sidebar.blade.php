@@ -22,15 +22,16 @@
     </li>
     <li class="list-group-item {{ Request::is('company/candidate-applications') ? 'active' : '' }}">
         <a href="{{ route('company_candidate_applications') }}">Candidate Applications</a>
-    </li>
-    <li class="list-group-item {{ Request::is('company/edit-password') ? 'active' : '' }}">
-        <a href="{{ route('company_edit_password') }}">Edit Password</a>
     </li> --}}
+
     <li class="list-group-item {{ Request::is('company/photos') ? 'active' : '' }}">
         <a href="{{ route('company_photos') }}">Photos</a>
     </li>
     <li class="list-group-item {{ Request::is('company/edit-profile') ? 'active' : '' }}">
         <a href="{{ route('company_edit_profile') }}">Edit Profile</a>
+    </li>
+    <li class="list-group-item {{ Request::is('company/edit-password') ? 'active' : '' }}">
+        <a href="{{ route('company_edit_password') }}">Edit Password</a>
     </li>
     <li class="list-group-item">
         <a href="{{ route('company_logout') }}">Logout</a>
