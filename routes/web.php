@@ -67,6 +67,9 @@ Route::middleware(['company:company'])->group(function () {
     Route::get('company/photos', [CompanyController::class, 'photos'])->name('company_photos');
     Route::post('company/photos-submit', [CompanyController::class, 'photos_submit'])->name('company_photos_submit');
     Route::get('company/photos/delete/{id}', [CompanyController::class, 'photos_delete'])->name('company_photos_delete');
+
+    Route::get('company/jobs/create-job', [CompanyController::class, 'jobs_create'])->name('company_jobs_create');
+    Route::post('company/jobs/create-job-submit', [CompanyController::class, 'jobs_create_submit'])->name('company_jobs_create_submit');
 });
 
 // Candidate

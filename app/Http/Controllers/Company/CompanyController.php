@@ -10,10 +10,17 @@ use Illuminate\Validation\Rule;
 use App\Models\Order;
 use App\Models\Package;
 use App\Models\Company;
+use App\Models\Job;
 use App\Models\CompanyLocation;
 use App\Models\CompanyIndustry;
 use App\Models\CompanyPhoto;
 use App\Models\CompanySize;
+use App\Models\jobCategory;
+use App\Models\jobLocation;
+use App\Models\jobType;
+use App\Models\jobExperience;
+use App\Models\jobGender;
+use App\Models\jobSalaryRange;
 
 use Auth;
 use Hash;
@@ -353,5 +360,70 @@ class CompanyController extends Controller
         return redirect()
             ->route('company_make_payment')
             ->with('error', 'Payment is cancelled!');
+    }
+
+    public function jobs_create()
+    {
+        $job_categories = jobCategory::orderBy('name', 'asc')->get();
+        $job_locations = jobLocation::orderBy('name', 'asc')->get();
+        $job_types = jobType::orderBy('name', 'asc')->get();
+        $job_experiences = jobExperience::orderBy('name', 'asc')->get();
+        $job_genders = jobGender::orderBy('name', 'asc')->get();
+        $job_salary_ranges = jobSalaryRange::orderBy('name', 'asc')->get();
+
+        return view('company.jobs_create', compact('job_categories', 'job_locations', 'job_types', 'job_experiences', 'job_genders', 'job_salary_ranges'));
+    }
+
+    public function jobs_create_submit(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'deadline' => 'required',
+            'vacancy' => 'required',
+        ]);
+
+        $order_data = Order::where('company_id', Auth::guard('company')->user()->id)
+            ->where('currently_active', 1)
+            ->first();
+        $package_data = Package::where('id', $order_data->package_id)->first();
+
+        $total_featured_jobs = Job::where('company_id', Auth::guard('company')->user()->id)
+            ->where('is_featured', 1)
+            ->count();
+
+        if ($total_featured_jobs == $package_data->total_allowed_featured_jobs) {
+            if ($request->is_featured == 1) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'You already have added the total number of featured jobs. Upgrade your package to add more jobs.');
+            }
+        }
+
+        $obj = new Job();
+
+        $obj->company_id = Auth::guard('company')->user()->id;
+        $obj->title = $request->title;
+        $obj->description = $request->description;
+        $obj->responsibility = $request->responsibility;
+        $obj->skill = $request->skill;
+        $obj->education = $request->education;
+        $obj->benefit = $request->benefit;
+        $obj->deadline = $request->deadline;
+        $obj->vacancy = $request->vacancy;
+        $obj->job_category_id = $request->job_category_id;
+        $obj->job_location_id = $request->job_location_id;
+        $obj->job_type_id = $request->job_type_id;
+        $obj->job_experience_id = $request->job_experience_id;
+        $obj->job_gender_id = $request->job_gender_id;
+        $obj->job_salary_range_id = $request->job_salary_range_id;
+        $obj->map_code = $request->map_code;
+        $obj->is_featured = $request->is_featured;
+        $obj->is_urgent = $request->is_urgent;
+        $obj->save();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Job has been posted successfully!');
     }
 }
