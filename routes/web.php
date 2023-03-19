@@ -70,6 +70,10 @@ Route::middleware(['company:company'])->group(function () {
 
     Route::get('company/jobs/create-job', [CompanyController::class, 'jobs_create'])->name('company_jobs_create');
     Route::post('company/jobs/create-job-submit', [CompanyController::class, 'jobs_create_submit'])->name('company_jobs_create_submit');
+    Route::get('company/jobs', [CompanyController::class, 'jobs'])->name('company_jobs');
+    Route::get('company/job-edit/{id}', [CompanyController::class, 'job_edit'])->name('company_job_edit');
+    Route::post('company/job-edit-submit/{id}', [CompanyController::class, 'job_edit_submit'])->name('company_job_edit_submit');
+    Route::get('company/job/delete/{id}', [CompanyController::class, 'job_delete'])->name('company_job_delete');
 });
 
 // Candidate

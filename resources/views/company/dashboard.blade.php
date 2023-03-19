@@ -28,13 +28,13 @@
                     <div class="row box-items">
                         <div class="col-md-4">
                             <div class="box1">
-                                <h4>10</h4>
+                                <h4>{{ count($jobs) }}</h4>
                                 <p>Open Jobs</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="box2">
-                                <h4>10</h4>
+                                <h4>{{ $featured_jobs }}</h4>
                                 <p>Featured Jobs</p>
                             </div>
                         </div>
@@ -53,12 +53,12 @@
                                     <th>Is Urgent?</th>
                                 </tr>
 
-                                {{-- @foreach ($jobs as $item)
+                                @foreach ($jobs as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->title }}</td>
-                                        <td>{{ $item->rJobCategory->name }}</td>
-                                        <td>{{ $item->rJobLocation->name }}</td>
+                                        <td>{{ $item->getJobCategory->name }}</td>
+                                        <td>{{ $item->getJobLocation->name }}</td>
                                         <td>
                                             @if ($item->is_featured == 1)
                                                 <span class="badge bg-success">Featured</span>
@@ -74,7 +74,7 @@
                                             @endif
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
 
                             </tbody>
                         </table>

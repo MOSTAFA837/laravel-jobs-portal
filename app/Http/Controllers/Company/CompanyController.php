@@ -31,7 +31,16 @@ class CompanyController extends Controller
 {
     public function dashboard()
     {
-        return view('company.dashboard');
+        $jobs = Job::where('company_id', Auth::guard('company')->user()->id)
+            ->orderBy('id', 'desc')
+            ->take(3)
+            ->get();
+
+        $featured_jobs = Job::where('company_id', Auth::guard('company')->user()->id)
+            ->where('is_featured', 1)
+            ->count();
+
+        return view('company.dashboard', compact('jobs', 'featured_jobs'));
     }
 
     public function orders()
@@ -425,5 +434,71 @@ class CompanyController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Job has been posted successfully!');
+    }
+
+    public function jobs()
+    {
+        $jobs = Job::where('company_id', Auth::guard('company')->user()->id)->get();
+
+        return view('company.jobs', compact('jobs'));
+    }
+
+    public function job_edit($id)
+    {
+        $job_single = Job::where('id', $id)->first();
+        $job_categories = JobCategory::orderBy('name', 'asc')->get();
+        $job_locations = JobLocation::orderBy('name', 'asc')->get();
+        $job_types = JobType::orderBy('name', 'asc')->get();
+        $job_experiences = JobExperience::orderBy('id', 'asc')->get();
+        $job_genders = JobGender::orderBy('id', 'asc')->get();
+        $job_salary_ranges = JobSalaryRange::orderBy('id', 'asc')->get();
+
+        return view('company.jobs_edit', compact('job_single', 'job_categories', 'job_locations', 'job_types', 'job_experiences', 'job_genders', 'job_salary_ranges'));
+    }
+
+    public function job_edit_submit(Request $request, $id)
+    {
+        $obj = Job::where('id', $id)->first();
+
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'deadline' => 'required',
+            'vacancy' => 'required',
+        ]);
+
+        $obj->title = $request->title;
+        $obj->description = $request->description;
+        $obj->responsibility = $request->responsibility;
+        $obj->skill = $request->skill;
+        $obj->education = $request->education;
+        $obj->benefit = $request->benefit;
+        $obj->deadline = $request->deadline;
+        $obj->vacancy = $request->vacancy;
+        $obj->job_category_id = $request->job_category_id;
+        $obj->job_location_id = $request->job_location_id;
+        $obj->job_type_id = $request->job_type_id;
+        $obj->job_experience_id = $request->job_experience_id;
+        $obj->job_gender_id = $request->job_gender_id;
+        $obj->job_salary_range_id = $request->job_salary_range_id;
+        $obj->map_code = $request->map_code;
+        $obj->is_featured = $request->is_featured;
+        $obj->is_urgent = $request->is_urgent;
+        $obj->update();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Job is updated successfully!');
+    }
+
+    public function job_delete($id)
+    {
+        Job::where('id', $id)->delete();
+        // CandidateApplication::where('job_id', $id)->delete();
+        // CandidateBookmark::where('job_id', $id)->delete();
+
+        return redirect()
+            ->route('company_jobs')
+            ->with('success', 'Job is deleted successfully.');
     }
 }
