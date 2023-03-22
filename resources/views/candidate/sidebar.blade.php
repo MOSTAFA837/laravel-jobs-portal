@@ -23,12 +23,20 @@
     <li class="list-group-item {{ Request::is('candidate/resume/view') ? 'active' : '' }}">
         <a href="{{ route('candidate_resume') }}">Resume Upload</a>
     </li>
+ --}}
+
     <li class="list-group-item {{ Request::is('candidate/edit-profile') ? 'active' : '' }}">
-        <a href="{{ route('candidate_edit_profile') }}">Edit Profile</a>
+        <a href="{{ route('candidate_edit_profile') }}">
+            Edit Profile
+        </a>
     </li>
+
     <li class="list-group-item {{ Request::is('candidate/edit-password') ? 'active' : '' }}">
-        <a href="{{ route('candidate_edit_password') }}">Edit Password</a>
-    </li> --}}
+        <a href="{{ route('candidate_edit_password') }}">
+            Edit Password
+        </a>
+    </li>
+
     <li class="list-group-item">
         <a href="{{ route('candidate_logout') }}">Logout</a>
     </li>
