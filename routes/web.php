@@ -108,6 +108,13 @@ Route::middleware(['candidate:candidate'])->group(function () {
     Route::get('candidate/skill/edit/{id}', [CandidateController::class, 'skill_edit'])->name('candidate_skill_edit');
     Route::post('candidate/skill/update/{id}', [CandidateController::class, 'skill_update'])->name('candidate_skill_update');
     Route::get('candidate/skill/delete/{id}', [CandidateController::class, 'skill_delete'])->name('candidate_skill_delete');
+
+    Route::get('candidate/experience/view', [CandidateController::class, 'experience'])->name('candidate_experience');
+    Route::get('candidate/experience/create', [CandidateController::class, 'experience_create'])->name('candidate_experience_create');
+    Route::post('candidate/experience/store', [CandidateController::class, 'experience_store'])->name('candidate_experience_store');
+    Route::get('candidate/experience/edit/{id}', [CandidateController::class, 'experience_edit'])->name('candidate_experience_edit');
+    Route::post('candidate/experience/update/{id}', [CandidateController::class, 'experience_update'])->name('candidate_experience_update');
+    Route::get('candidate/experience/delete/{id}', [CandidateController::class, 'experience_delete'])->name('candidate_experience_delete');
 });
 
 // Admin

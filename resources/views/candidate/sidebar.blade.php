@@ -10,11 +10,6 @@
     <li class="list-group-item {{ Request::is('candidate/bookmark-view') ? 'active' : '' }}">
         <a href="{{ route('candidate_bookmark_view') }}">Bookmarked Jobs</a>
     </li>
-
-
-    <li class="list-group-item {{ Request::is('candidate/experience/view') ? 'active' : '' }}">
-        <a href="{{ route('candidate_experience') }}">Work Experience</a>
-    </li>
     <li class="list-group-item {{ Request::is('candidate/award/view') ? 'active' : '' }}">
         <a href="{{ route('candidate_award') }}">Awards</a>
     </li>
@@ -22,7 +17,6 @@
         <a href="{{ route('candidate_resume') }}">Resume Upload</a>
     </li>
     --}}
-
     <li class="list-group-item {{ Request::is('candidate/education/*') ? 'active' : '' }}">
         <a href="{{ route('candidate_education') }}">
             Education
@@ -32,6 +26,12 @@
     <li class="list-group-item {{ Request::is('candidate/skill/*') ? 'active' : '' }}">
         <a href="{{ route('candidate_skill') }}">
             Skills
+        </a>
+    </li>
+
+    <li class="list-group-item {{ Request::is('candidate/experience/*') ? 'active' : '' }}">
+        <a href="{{ route('candidate_experience') }}">
+            Work Experience
         </a>
     </li>
 
