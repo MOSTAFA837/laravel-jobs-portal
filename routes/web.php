@@ -115,6 +115,13 @@ Route::middleware(['candidate:candidate'])->group(function () {
     Route::get('candidate/experience/edit/{id}', [CandidateController::class, 'experience_edit'])->name('candidate_experience_edit');
     Route::post('candidate/experience/update/{id}', [CandidateController::class, 'experience_update'])->name('candidate_experience_update');
     Route::get('candidate/experience/delete/{id}', [CandidateController::class, 'experience_delete'])->name('candidate_experience_delete');
+
+    Route::get('candidate/award/view', [CandidateController::class, 'award'])->name('candidate_award');
+    Route::get('candidate/award/create', [CandidateController::class, 'award_create'])->name('candidate_award_create');
+    Route::post('candidate/award/store', [CandidateController::class, 'award_store'])->name('candidate_award_store');
+    Route::get('candidate/award/edit/{id}', [CandidateController::class, 'award_edit'])->name('candidate_award_edit');
+    Route::post('candidate/award/update/{id}', [CandidateController::class, 'award_update'])->name('candidate_award_update');
+    Route::get('candidate/award/delete/{id}', [CandidateController::class, 'award_delete'])->name('candidate_award_delete');
 });
 
 // Admin
