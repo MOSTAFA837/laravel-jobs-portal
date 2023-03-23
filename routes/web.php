@@ -122,6 +122,13 @@ Route::middleware(['candidate:candidate'])->group(function () {
     Route::get('candidate/award/edit/{id}', [CandidateController::class, 'award_edit'])->name('candidate_award_edit');
     Route::post('candidate/award/update/{id}', [CandidateController::class, 'award_update'])->name('candidate_award_update');
     Route::get('candidate/award/delete/{id}', [CandidateController::class, 'award_delete'])->name('candidate_award_delete');
+
+    Route::get('candidate/resume/view', [CandidateController::class, 'resume'])->name('candidate_resume');
+    Route::get('candidate/resume/create', [CandidateController::class, 'resume_create'])->name('candidate_resume_create');
+    Route::post('candidate/resume/store', [CandidateController::class, 'resume_store'])->name('candidate_resume_store');
+    Route::get('candidate/resume/edit/{id}', [CandidateController::class, 'resume_edit'])->name('candidate_resume_edit');
+    Route::post('candidate/resume/update/{id}', [CandidateController::class, 'resume_update'])->name('candidate_resume_update');
+    Route::get('candidate/resume/delete/{id}', [CandidateController::class, 'resume_delete'])->name('candidate_resume_delete');
 });
 
 // Admin
