@@ -487,7 +487,7 @@ class CompanyController extends Controller
         $obj->update();
 
         return redirect()
-            ->back()
+            ->route('company_jobs')
             ->with('success', 'Job is updated successfully!');
     }
 

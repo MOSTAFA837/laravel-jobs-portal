@@ -15,11 +15,12 @@
                 </a>
                 <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a href="index.html" class="nav-link">Home</a>
+                        <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
+                            <a href="{{ route('home') }}" class="nav-link ">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="jobs.html" class="nav-link">
+                        <li
+                            class="nav-item {{ (Request::is('job-listing') ? 'active' : '' || Request::is('job/*')) ? 'active' : '' }}">
+                            <a href="{{ route('job_listing') }}" class="nav-link ">
                                 Find Jobs</a>
                         </li>
                         <li class="nav-item">
