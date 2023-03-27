@@ -62,7 +62,7 @@ class JobListingController extends Controller
             $jobs = $jobs->where('job_salary_range_id', $form_salary_range);
         }
 
-        $jobs = $jobs->paginate(1);
+        $jobs = $jobs->paginate(4);
 
         return view('front.job_listing', compact('jobs', 'job_categories', 'job_locations', 'job_types', 'job_experiences', 'job_genders', 'job_salary_ranges', 'form_title', 'form_category', 'form_location', 'form_type', 'form_experience', 'form_gender', 'form_salary_range'));
     }
