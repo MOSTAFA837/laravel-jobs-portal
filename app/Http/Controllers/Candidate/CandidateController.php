@@ -11,6 +11,8 @@ use App\Models\CandidateExperience;
 use App\Models\CandidateAward;
 use App\Models\CandidateResume;
 use App\Models\CandidateBookmark;
+use App\Models\CandidateApplication;
+use App\Models\Job;
 use Illuminate\Validation\Rule;
 use Auth;
 use Hash;
@@ -492,5 +494,47 @@ class CandidateController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Bookmarked job deleted successfully !');
+    }
+
+    public function apply($id)
+    {
+        $is_applied = CandidateApplication::where('candidate_id', Auth::guard('candidate')->user()->id)
+            ->where('job_id', $id)
+            ->count();
+
+        if ($is_applied) {
+            return redirect()
+                ->back()
+                ->with('error', 'You have already Applied to this job!');
+        }
+
+        $job_single = Job::where('id', $id)->first();
+
+        return view('candidate.apply', compact('job_single'));
+    }
+
+    public function apply_submit(Request $request, $id)
+    {
+        $request->validate([
+            'cover_letter' => 'required',
+        ]);
+
+        $obj = new CandidateApplication();
+        $obj->candidate_id = Auth::guard('candidate')->user()->id;
+        $obj->job_id = $id;
+        $obj->cover_letter = $request->cover_letter;
+        $obj->status = 'Applied';
+        $obj->save();
+
+        return redirect()
+            ->route('job', $id)
+            ->with('success', 'Your Application has been sent successfully');
+    }
+
+    public function applications()
+    {
+        $applied_jobs = CandidateApplication::where('candidate_id', Auth::guard('candidate')->user()->id)->get();
+
+        return view('candidate.applications', compact('applied_jobs'));
     }
 }
