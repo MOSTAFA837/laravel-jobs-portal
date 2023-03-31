@@ -23,6 +23,7 @@ use App\Http\Controllers\Front\PricingController;
 use App\Http\Controllers\Front\JobCategoryController;
 use App\Http\Controllers\Front\LoginController;
 use App\Http\Controllers\Front\JobListingController;
+use App\Http\Controllers\Front\CompanyListingController;
 
 use App\Http\Controllers\Company\CompanyController;
 
@@ -32,9 +33,14 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('terms', [TermsController::class, 'index'])->name('terms');
 Route::get('pricing', [PricingController::class, 'index'])->name('pricing');
 Route::get('job-categories', [JobCategoryController::class, 'categories'])->name('job_categories');
+
 Route::get('job-listing', [JobListingController::class, 'index'])->name('job_listing');
 Route::get('job/{id}', [JobListingController::class, 'details'])->name('job');
 Route::post('job/enquery/email', [JobListingController::class, 'send_email'])->name('job_enquery_send_email');
+
+Route::get('company-listing', [CompanyListingController::class, 'index'])->name('company_listing');
+Route::get('company/{id}', [CompanyListingController::class, 'details'])->name('company');
+Route::post('company/enquery/email', [CompanyListingController::class, 'send_email'])->name('company_enquery_send_email');
 
 Route::get('login', [LoginController::class, 'login'])->name('login');
 Route::get('signup', [LoginController::class, 'signup'])->name('signup');

@@ -77,28 +77,40 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-12">
-                    <div class="left-item">
-                        <h2><i class="fas fa-file-invoice"></i> Description</h2>
-                        <p>{!! $job_single->description !!}</p>
-                    </div>
-                    <div class="left-item">
-                        <h2><i class="fas fa-file-invoice"></i> Job Responsibilities</h2>
-                        {!! $job_single->responsibility !!}
-                    </div>
-                    <div class="left-item">
-                        <h2><i class="fas fa-file-invoice"></i> Skills and Abilities</h2>
-                        {!! $job_single->skill !!}
-                    </div>
+                    @if ($job_single->description != null)
+                        <div class="left-item">
+                            <h2><i class="fas fa-file-invoice"></i> Description</h2>
+                            <p>{!! $job_single->description !!}</p>
+                        </div>
+                    @endif
 
-                    <div class="left-item">
-                        <h2><i class="fas fa-file-invoice"></i> Educational Qualification</h2>
-                        {!! $job_single->education !!}
-                    </div>
+                    @if ($job_single->responsibility != null)
+                        <div class="left-item">
+                            <h2><i class="fas fa-file-invoice"></i> Job Responsibilities</h2>
+                            {!! $job_single->responsibility !!}
+                        </div>
+                    @endif
 
-                    <div class="left-item">
-                        <h2><i class="fas fa-file-invoice"></i> Benefits</h2>
-                        {!! $job_single->benefit !!}
-                    </div>
+                    @if ($job_single->skill != null)
+                        <div class="left-item">
+                            <h2><i class="fas fa-file-invoice"></i> Skills and Abilities</h2>
+                            {!! $job_single->skill !!}
+                        </div>
+                    @endif
+
+                    @if ($job_single->education != null)
+                        <div class="left-item">
+                            <h2><i class="fas fa-file-invoice"></i> Educational Qualification</h2>
+                            {!! $job_single->education !!}
+                        </div>
+                    @endif
+
+                    @if ($job_single->benefit != null)
+                        <div class="left-item">
+                            <h2><i class="fas fa-file-invoice"></i> Benefits</h2>
+                            {!! $job_single->benefit !!}
+                        </div>
+                    @endif
 
                     @if (date('Y-m-d') <= $job_single->deadline)
                         <div class="left-item">
