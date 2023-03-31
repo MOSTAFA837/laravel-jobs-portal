@@ -39,8 +39,8 @@ Route::get('job/{id}', [JobListingController::class, 'details'])->name('job');
 Route::post('job/enquery/email', [JobListingController::class, 'send_email'])->name('job_enquery_send_email');
 
 Route::get('company-listing', [CompanyListingController::class, 'index'])->name('company_listing');
-Route::get('company/{id}', [CompanyListingController::class, 'details'])->name('company');
-Route::post('company/enquery/email', [CompanyListingController::class, 'send_email'])->name('company_enquery_send_email');
+Route::get('company-details/{id}', [CompanyListingController::class, 'details'])->name('company');
+Route::post('company-enquery/email', [CompanyListingController::class, 'send_email'])->name('company_enquery_send_email');
 
 Route::get('login', [LoginController::class, 'login'])->name('login');
 Route::get('signup', [LoginController::class, 'signup'])->name('signup');
@@ -140,6 +140,10 @@ Route::middleware(['candidate:candidate'])->group(function () {
     Route::get('candidate/resume/edit/{id}', [CandidateController::class, 'resume_edit'])->name('candidate_resume_edit');
     Route::post('candidate/resume/update/{id}', [CandidateController::class, 'resume_update'])->name('candidate_resume_update');
     Route::get('candidate/resume/delete/{id}', [CandidateController::class, 'resume_delete'])->name('candidate_resume_delete');
+
+    Route::get('candidate/bookmark-add/{id}', [CandidateController::class, 'bookmark_add'])->name('candidate_bookmark_add');
+    Route::get('candidate/bookmark-view', [CandidateController::class, 'bookmark_view'])->name('candidate_bookmark_view');
+    Route::get('candidate/bookmark-delete/{id}', [CandidateController::class, 'bookmark_delete'])->name('candidate_bookmark_delete');
 });
 
 // Admin

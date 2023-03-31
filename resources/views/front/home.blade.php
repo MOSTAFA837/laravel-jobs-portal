@@ -173,7 +173,8 @@
                             </div>
                             <div class="text">
                                 <h3>
-                                    <a href="job.html">{{ $item->title }}, {{ $item->getCompany->company_name }}</a>
+                                    <a href="{{ route('job', $item->id) }}">{{ $item->title }},
+                                        {{ $item->getCompany->company_name }}</a>
                                 </h3>
                                 <div class="detail-1 d-flex justify-content-start">
                                     <div class="category"> {{ $item->getJobCategory->name }}</div>
@@ -206,9 +207,26 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="bookmark">
-                                    <a href=""><i class="fas fa-bookmark active"></i></a>
-                                </div>
+
+                                @if (Auth::guard('candidate')->check() && !Auth::guard('company')->check())
+                                    @php
+                                        $is_bookmarked = \App\Models\CandidateBookmark::where('candidate_id', Auth::guard('candidate')->user()->id)
+                                            ->where('job_id', $item->id)
+                                            ->count();
+                                        
+                                        if ($is_bookmarked) {
+                                            $bookmark_status = 'active';
+                                        } else {
+                                            $bookmark_status = '';
+                                        }
+                                    @endphp
+
+                                    <div class="bookmark">
+                                        <a href="{{ route('candidate_bookmark_add', $item->id) }}">
+                                            <i class="fas fa-bookmark {{ $bookmark_status }}"></i>
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

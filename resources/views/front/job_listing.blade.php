@@ -176,11 +176,25 @@
                                                     @endif
                                                 </div>
 
-                                                <div class="bookmark">
-                                                    <a href="">
-                                                        <i class="fas fa-bookmark active"></i>
-                                                    </a>
-                                                </div>
+                                                @if (Auth::guard('candidate')->check() && !Auth::guard('company')->check())
+                                                    @php
+                                                        $is_bookmarked = \App\Models\CandidateBookmark::where('candidate_id', Auth::guard('candidate')->user()->id)
+                                                            ->where('job_id', $item->id)
+                                                            ->count();
+                                                        
+                                                        if ($is_bookmarked) {
+                                                            $bookmark_status = 'active';
+                                                        } else {
+                                                            $bookmark_status = '';
+                                                        }
+                                                    @endphp
+
+                                                    <div class="bookmark">
+                                                        <a href="{{ route('candidate_bookmark_add', $item->id) }}">
+                                                            <i class="fas fa-bookmark {{ $bookmark_status }}"></i>
+                                                        </a>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

@@ -223,24 +223,23 @@
                                                         @endif
                                                     </div>
 
-                                                    @if (!Auth::guard('company')->check())
+                                                    @if (Auth::guard('candidate')->check() && !Auth::guard('company')->check())
+                                                        @php
+                                                            $is_bookmarked = \App\Models\CandidateBookmark::where('candidate_id', Auth::guard('candidate')->user()->id)
+                                                                ->where('job_id', $item->id)
+                                                                ->count();
+                                                            
+                                                            if ($is_bookmarked) {
+                                                                $bookmark_status = 'active';
+                                                            } else {
+                                                                $bookmark_status = '';
+                                                            }
+                                                        @endphp
+
                                                         <div class="bookmark">
-                                                            @if (Auth::guard('candidate')->check())
-                                                                @php
-                                                                    $count = \App\Models\CandidateBookmark::where('candidate_id', Auth::guard('candidate')->user()->id)
-                                                                        ->where('job_id', $item->id)
-                                                                        ->count();
-                                                                    if ($count > 0) {
-                                                                        $bookmark_status = 'active';
-                                                                    } else {
-                                                                        $bookmark_status = '';
-                                                                    }
-                                                                @endphp
-                                                            @else
-                                                                @php $bookmark_status = ''; @endphp
-                                                            @endif
-                                                            <a href=""><i
-                                                                    class="fas fa-bookmark {{ $bookmark_status }}"></i></a>
+                                                            <a href="{{ route('candidate_bookmark_add', $item->id) }}">
+                                                                <i class="fas fa-bookmark {{ $bookmark_status }}"></i>
+                                                            </a>
                                                         </div>
                                                     @endif
                                                 </div>

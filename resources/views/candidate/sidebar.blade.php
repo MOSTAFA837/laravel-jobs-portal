@@ -6,10 +6,11 @@
     {{-- <li class="list-group-item {{ Request::is('candidate/applications') ? 'active' : '' }}">
         <a href="{{ route('candidate_applications') }}">Applied Jobs</a>
     </li>
+    --}}
     <li class="list-group-item {{ Request::is('candidate/bookmark-view') ? 'active' : '' }}">
         <a href="{{ route('candidate_bookmark_view') }}">Bookmarked Jobs</a>
     </li>
-    --}}
+
     <li class="list-group-item {{ Request::is('candidate/education/*') ? 'active' : '' }}">
         <a href="{{ route('candidate_education') }}">
             Education

@@ -10,6 +10,7 @@ use App\Models\CandidateSkill;
 use App\Models\CandidateExperience;
 use App\Models\CandidateAward;
 use App\Models\CandidateResume;
+use App\Models\CandidateBookmark;
 use Illuminate\Validation\Rule;
 use Auth;
 use Hash;
@@ -452,5 +453,44 @@ class CandidateController extends Controller
         return redirect()
             ->route('candidate_resume')
             ->with('success', 'Resume is deleted successfully.');
+    }
+
+    public function bookmark_add($id)
+    {
+        $is_bookmarked = CandidateBookmark::where('candidate_id', Auth::guard('candidate')->user()->id)
+            ->where('job_id', $id)
+            ->count();
+
+        if ($is_bookmarked > 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'You have already bookmarked this job!');
+        }
+
+        $obj = new CandidateBookmark();
+
+        $obj->candidate_id = Auth::guard('candidate')->user()->id;
+        $obj->job_id = $id;
+        $obj->save();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Job bookmarked successfully !');
+    }
+
+    public function bookmark_view()
+    {
+        $bookmarked_jobs = CandidateBookmark::where('candidate_id', Auth::guard('candidate')->user()->id)->get();
+
+        return view('candidate.bookmark', compact('bookmarked_jobs'));
+    }
+
+    public function bookmark_delete($id)
+    {
+        CandidateBookmark::where('id', $id)->delete();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Bookmarked job deleted successfully !');
     }
 }

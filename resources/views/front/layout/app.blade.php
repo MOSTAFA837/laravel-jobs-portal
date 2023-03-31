@@ -23,8 +23,25 @@
             <div class="row">
                 <div class="col-md-6 left-side">
                     <ul>
-                        <li class="phone-text">111-222-3333</li>
-                        <li class="email-text">contact@arefindev.com</li>
+                        @if (Auth::guard('candidate')->check())
+                            <li class="phone-text">
+                                {{ Auth::guard('candidate')->user()->phone }}
+                            </li>
+
+                            <li class="email-text">
+                                {{ Auth::guard('candidate')->user()->email }}
+                            </li>
+                        @endif
+
+                        @if (Auth::guard('company')->check())
+                            <li class="phone-text">
+                                {{ Auth::guard('company')->user()->phone }}
+                            </li>
+
+                            <li class="email-text">
+                                {{ Auth::guard('company')->user()->email }}
+                            </li>
+                        @endif
                     </ul>
                 </div>
                 <div class="col-md-6 right-side">

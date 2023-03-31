@@ -34,8 +34,6 @@
                                     <th>Action</th>
                                 </tr>
 
-
-
                                 @foreach ($jobs as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
