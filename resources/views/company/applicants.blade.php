@@ -32,7 +32,7 @@
                                     <th>Phone</th>
                                     <th>Status</th>
                                     <th>Action</th>
-                                    <th>Detail</th>
+                                    <th>Details</th>
                                     <th>CV</th>
                                 </tr>
 
@@ -41,9 +41,9 @@
                                     @php $i++; @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->rCandidate->name }}</td>
-                                        <td>{{ $item->rCandidate->email }}</td>
-                                        <td>{{ $item->rCandidate->phone }}</td>
+                                        <td>{{ $item->getCandidate->name }}</td>
+                                        <td>{{ $item->getCandidate->email }}</td>
+                                        <td>{{ $item->getCandidate->phone }}</td>
                                         <td>
                                             @if ($item->status == 'Applied')
                                                 @php $color="primary"; @endphp
@@ -59,22 +59,34 @@
                                                 @csrf
                                                 <input type="hidden" name="job_id" value="{{ $job_single->id }}">
                                                 <input type="hidden" name="candidate_id" value="{{ $item->candidate_id }}">
-                                                <select name="status" class="form-control select2 w_100"
+
+                                                <select name="status" class="form-control select w_100"
                                                     onchange="this.form.submit()">
                                                     <option value="">Select</option>
-                                                    <option value="Applied">Applied</option>
-                                                    <option value="Approved">Approved</option>
-                                                    <option value="Rejected">Rejected</option>
+                                                    <option {{ $item->status == 'Applied' ? 'selected' : '' }}
+                                                        value="Applied">
+                                                        Applied
+                                                    </option>
+                                                    <option {{ $item->status == 'Approved' ? 'selected' : '' }}
+                                                        value="Approved">
+                                                        Approved
+                                                    </option>
+                                                    <option {{ $item->status == 'Rejected' ? 'selected' : '' }}
+                                                        value="Rejected">
+                                                        Rejected
+                                                    </option>
                                                 </select>
                                             </form>
                                         </td>
                                         <td>
                                             <a href="{{ route('company_applicant_resume', $item->candidate_id) }}"
-                                                class="badge bg-primary text-white" target="_blank">Detail</a>
+                                                class="badge bg-primary text-white" target="_blank">Details</a>
                                         </td>
                                         <td>
                                             <a href="" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal{{ $i }}">CV</a>
+                                                data-bs-target="#exampleModal{{ $i }}">
+                                                CV
+                                            </a>
 
                                             <div class="modal fade" id="exampleModal{{ $i }}" tabindex="-1"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -95,7 +107,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>

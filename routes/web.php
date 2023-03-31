@@ -85,6 +85,11 @@ Route::middleware(['company:company'])->group(function () {
     Route::get('company/job-edit/{id}', [CompanyController::class, 'job_edit'])->name('company_job_edit');
     Route::post('company/job-edit-submit/{id}', [CompanyController::class, 'job_edit_submit'])->name('company_job_edit_submit');
     Route::get('company/job/delete/{id}', [CompanyController::class, 'job_delete'])->name('company_job_delete');
+
+    Route::get('company/candidate-applications', [CompanyController::class, 'candidate_applications'])->name('company_candidate_applications');
+    Route::get('company/applicants/{id}', [CompanyController::class, 'applicants'])->name('company_applicants');
+    Route::get('company/applicant-resume/{id}', [CompanyController::class, 'applicant_resume'])->name('company_applicant_resume');
+    Route::post('company/application-status-change', [CompanyController::class, 'application_status_change'])->name('company_application_status_change');
 });
 
 // Candidate

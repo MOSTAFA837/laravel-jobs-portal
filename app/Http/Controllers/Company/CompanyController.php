@@ -21,6 +21,13 @@ use App\Models\jobType;
 use App\Models\jobExperience;
 use App\Models\jobGender;
 use App\Models\jobSalaryRange;
+use App\Models\CandidateApplication;
+use App\Models\Candidate;
+use App\Models\CandidateEducation;
+use App\Models\CandidateSkill;
+use App\Models\CandidateExperience;
+use App\Models\CandidateAward;
+use App\Models\CandidateResume;
 
 use Auth;
 use Hash;
@@ -500,5 +507,47 @@ class CompanyController extends Controller
         return redirect()
             ->route('company_jobs')
             ->with('success', 'Job is deleted successfully.');
+    }
+
+    public function candidate_applications()
+    {
+        $jobs = Job::where('company_id', Auth::guard('company')->user()->id)->get();
+
+        return view('company.applications', compact('jobs'));
+    }
+
+    public function applicants($id)
+    {
+        $applicants = CandidateApplication::where('job_id', $id)->get();
+        $job_single = Job::where('id', $id)->first();
+
+        return view('company.applicants', compact('applicants', 'job_single'));
+    }
+
+    public function applicant_resume($id)
+    {
+        $candidate = Candidate::where('id', $id)->first();
+
+        $educations = CandidateEducation::where('candidate_id', $id)->get();
+        $skills = CandidateSkill::where('candidate_id', $id)->get();
+        $experiences = CandidateExperience::where('candidate_id', $id)->get();
+        $awards = CandidateAward::where('candidate_id', $id)->get();
+        $resumes = CandidateResume::where('candidate_id', $id)->get();
+
+        return view('company.applicant_resume', compact('candidate', 'educations', 'skills', 'experiences', 'awards', 'resumes'));
+    }
+
+    public function application_status_change(Request $request)
+    {
+        $obj = CandidateApplication::where('candidate_id', $request->candidate_id)
+            ->where('job_id', $request->job_id)
+            ->first();
+
+        $obj->status = $request->status;
+        $obj->update();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Status has been changed successfully');
     }
 }
