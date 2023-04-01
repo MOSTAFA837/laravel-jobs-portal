@@ -13,6 +13,7 @@ use App\Models\CandidateResume;
 use App\Models\CandidateBookmark;
 use App\Models\CandidateApplication;
 use App\Models\Job;
+use App\Mail\Websitemail;
 use Illuminate\Validation\Rule;
 use Auth;
 use Hash;
@@ -535,6 +536,17 @@ class CandidateController extends Controller
         $obj->cover_letter = $request->cover_letter;
         $obj->status = 'Applied';
         $obj->save();
+
+        $job_info = Job::where('id', $id)->first();
+        $company_email = $job_info->getCompany->email;
+
+        // sending an email to company
+        $applicants_list_url = route('company_applicants', $id);
+        $subject = 'Someone applied for your job.';
+        $message = 'Please check your application list: ';
+        $message .= '<a href="' . $applicants_list_url . '">Click to view applicants list for this job</a>';
+
+        \Mail::to($company_email)->send(new Websitemail($subject, $message));
 
         return redirect()
             ->route('job', $id)
