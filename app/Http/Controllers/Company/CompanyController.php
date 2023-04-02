@@ -28,6 +28,7 @@ use App\Models\CandidateSkill;
 use App\Models\CandidateExperience;
 use App\Models\CandidateAward;
 use App\Models\CandidateResume;
+use App\Mail\Websitemail;
 
 use Auth;
 use Hash;
@@ -545,6 +546,17 @@ class CompanyController extends Controller
 
         $obj->status = $request->status;
         $obj->update();
+
+        $candidate_email = $obj->getCandidate->email;
+
+        if ($request->status == 'Approved') {
+            // Sending an email to candidate
+            $details_link = route('candidate_applications');
+            $subject = 'Congratulation! Your application is approved';
+            $message = 'Please check the details: <br>';
+            $message .= '<a href="' . $details_link . '">Click to view the details</a>';
+            \Mail::to($candidate_email)->send(new Websitemail($subject, $message));
+        }
 
         return redirect()
             ->back()
