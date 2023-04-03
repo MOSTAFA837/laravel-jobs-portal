@@ -59,12 +59,12 @@ class AdminCompanyIndustryController extends Controller
 
     public function delete($id)
     {
-        // $check = Company::where('company_industry_id', $id)->count();
-        // if ($check > 0) {
-        //     return redirect()
-        //         ->back()
-        //         ->with('error', 'You can not delete this item, because this is used in another place.');
-        // }
+        $check = Company::where('company_industry_id', $id)->count();
+        if ($check > 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'You can not delete this item, because this is used in another place.');
+        }
 
         CompanyIndustry::where('id', $id)->delete();
         return redirect()

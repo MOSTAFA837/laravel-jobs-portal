@@ -165,7 +165,25 @@
                 </div>
             </div>
             <div class="row">
+                @php
+                    $i = 0;
+                @endphp
                 @foreach ($featured_jobs as $item)
+                    @php
+                        $company_id = $item->getCompany->id;
+                        $order_data = \App\Models\Order::where('company_id', $company_id)
+                            ->where('currently_active', 1)
+                            ->first();
+
+                        if (date('Y-m-d') > $order_data->expire_date) {
+                            continue;
+                        }
+
+                        $i++;
+                        if ($i > 6) {
+                            break;
+                        }
+                    @endphp
                     <div class="col-lg-6 col-md-12">
                         <div class="item d-flex justify-content-start">
                             <div class="logo">
@@ -213,7 +231,7 @@
                                         $is_bookmarked = \App\Models\CandidateBookmark::where('candidate_id', Auth::guard('candidate')->user()->id)
                                             ->where('job_id', $item->id)
                                             ->count();
-                                        
+
                                         if ($is_bookmarked) {
                                             $bookmark_status = 'active';
                                         } else {

@@ -118,87 +118,103 @@
                                     </div>
                                 </div>
 
-                                @foreach ($jobs as $item)
-                                    <div class="col-md-12">
-                                        <div class="item d-flex justify-content-start">
-                                            <div class="logo">
-                                                <img src="{{ asset('uploads/' . $item->getCompany->logo) }}"
-                                                    alt="" />
-                                            </div>
-                                            <div class="text">
-                                                <h3>
-                                                    <a href="{{ route('job', $item->id) }}">
-                                                        {{ $item->title }}, {{ $item->getCompany->company_name }}
-                                                    </a>
-                                                </h3>
+                                @if (!$jobs->count())
+                                    <div class="text-danger">No Result Found</div>
+                                @else
+                                    @foreach ($jobs as $item)
+                                        @php
+                                            $company_id = $item->getCompany->id;
+                                            $order_data = \App\Models\Order::where('company_id', $company_id)
+                                                ->where('currently_active', 1)
+                                                ->first();
 
-                                                <div class="detail-1 d-flex justify-content-start">
-                                                    <div class="category">
-                                                        {{ $item->getJobCategory->name }}
-                                                    </div>
-
-                                                    <div class="location">
-                                                        {{ $item->getJobLocation->name }}
-                                                    </div>
+                                            if (date('Y-m-d') > $order_data->expire_date) {
+                                                continue;
+                                            }
+                                        @endphp
+                                        <div class="col-md-12">
+                                            <div class="item d-flex justify-content-start">
+                                                <div class="logo">
+                                                    <img src="{{ asset('uploads/' . $item->getCompany->logo) }}"
+                                                        alt="" />
                                                 </div>
-
-                                                <div class="detail-2 d-flex justify-content-start">
-                                                    <div class="date">
-                                                        {{ $item->created_at->diffForHumans() }}
-                                                    </div>
-
-                                                    <div class="budget">
-                                                        {{ $item->getJobSalaryRange->name }}
-                                                    </div>
-
-                                                    @if (date('Y-m-d') > $item->deadline)
-                                                        <div class="expired">
-                                                            Expired
-                                                        </div>
-                                                    @endif
-                                                </div>
-
-                                                <div class="special d-flex justify-content-start">
-                                                    @if ($item->is_featured == 1)
-                                                        <div class="featured">
-                                                            Featured
-                                                        </div>
-                                                    @endif
-
-                                                    <div class="type">
-                                                        {{ $item->getJobType->name }}
-                                                    </div>
-
-                                                    @if ($item->is_urgent == 1)
-                                                        <div class="urgent">
-                                                            Urgent
-                                                        </div>
-                                                    @endif
-                                                </div>
-
-                                                @if (Auth::guard('candidate')->check() && !Auth::guard('company')->check())
-                                                    @php
-                                                        $is_bookmarked = \App\Models\CandidateBookmark::where('candidate_id', Auth::guard('candidate')->user()->id)
-                                                            ->where('job_id', $item->id)
-                                                            ->count();
-                                                        
-                                                        if ($is_bookmarked) {
-                                                            $bookmark_status = 'active';
-                                                        } else {
-                                                            $bookmark_status = '';
-                                                        }
-                                                    @endphp
-
-                                                    <div class="bookmark">
-                                                        <a href="{{ route('candidate_bookmark_add', $item->id) }}">
-                                                            <i class="fas fa-bookmark {{ $bookmark_status }}"></i>
+                                                <div class="text">
+                                                    <h3>
+                                                        <a href="{{ route('job', $item->id) }}">
+                                                            {{ $item->title }}, {{ $item->getCompany->company_name }}
                                                         </a>
+                                                    </h3>
+
+                                                    <div class="detail-1 d-flex justify-content-start">
+                                                        <div class="category">
+                                                            {{ $item->getJobCategory->name }}
+                                                        </div>
+
+                                                        <div class="location">
+                                                            {{ $item->getJobLocation->name }}
+                                                        </div>
                                                     </div>
-                                                @endif
+
+                                                    <div class="detail-2 d-flex justify-content-start">
+                                                        <div class="date">
+                                                            {{ $item->created_at->diffForHumans() }}
+                                                        </div>
+
+                                                        <div class="budget">
+                                                            {{ $item->getJobSalaryRange->name }}
+                                                        </div>
+
+                                                        @if (date('Y-m-d') > $item->deadline)
+                                                            <div class="expired">
+                                                                Expired
+                                                            </div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="special d-flex justify-content-start">
+                                                        @if ($item->is_featured == 1)
+                                                            <div class="featured">
+                                                                Featured
+                                                            </div>
+                                                        @endif
+
+                                                        <div class="type">
+                                                            {{ $item->getJobType->name }}
+                                                        </div>
+
+                                                        @if ($item->is_urgent == 1)
+                                                            <div class="urgent">
+                                                                Urgent
+                                                            </div>
+                                                        @endif
+                                                    </div>
+
+                                                    @if (Auth::guard('candidate')->check() && !Auth::guard('company')->check())
+                                                        @php
+                                                            $is_bookmarked = \App\Models\CandidateBookmark::where('candidate_id', Auth::guard('candidate')->user()->id)
+                                                                ->where('job_id', $item->id)
+                                                                ->count();
+
+                                                            if ($is_bookmarked) {
+                                                                $bookmark_status = 'active';
+                                                            } else {
+                                                                $bookmark_status = '';
+                                                            }
+                                                        @endphp
+
+                                                        <div class="bookmark">
+                                                            <a href="{{ route('candidate_bookmark_add', $item->id) }}">
+                                                                <i class="fas fa-bookmark {{ $bookmark_status }}"></i>
+                                                            </a>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                @endif
+
+
 
                                 <div class="col-md-12">
                                     {{ $jobs->appends($_GET)->links() }}

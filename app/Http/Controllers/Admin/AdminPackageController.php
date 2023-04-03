@@ -88,12 +88,12 @@ class AdminPackageController extends Controller
 
     public function delete($id)
     {
-        // $check = Order::where('package_id', $id)->count();
-        // if ($check > 0) {
-        //     return redirect()
-        //         ->back()
-        //         ->with('error', 'You can not delete this item, because this is used in another place.');
-        // }
+        $check = Order::where('package_id', $id)->count();
+        if ($check > 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'You can not delete this item, because this is used in another place.');
+        }
 
         Package::where('id', $id)->delete();
 

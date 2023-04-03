@@ -192,6 +192,12 @@ class CompanyController extends Controller
                 ->with('error', 'Maximum number of photos are uploaded. upgrade your package to upload more photos.');
         }
 
+        if (date('Y-m-d') > $order_data->expire_date) {
+            return redirect()
+                ->back()
+                ->with('error', 'Your package had expired');
+        }
+
         $request->validate([
             'photo' => 'image|mimes:jpg,jpeg,png,gif',
         ]);
@@ -381,6 +387,37 @@ class CompanyController extends Controller
 
     public function jobs_create()
     {
+        // Check if a person buy a package
+        $order_data = Order::where('company_id', Auth::guard('company')->user()->id)
+            ->where('currently_active', 1)
+            ->first();
+        if (!$order_data) {
+            return redirect()
+                ->back()
+                ->with('error', 'You must have to buy a package first to access this page');
+        }
+        if (date('Y-m-d') > $order_data->expire_date) {
+            return redirect()
+                ->back()
+                ->with('error', 'Your package is expired!');
+        }
+
+        // Check if a person has access to this page under the current package
+        $package_data = Package::where('id', $order_data->package_id)->first();
+        if ($package_data->total_allowed_jobs == 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'Your current package does not allow to access the job section');
+        }
+
+        // How many jobs this company posted
+        $total_jobs_posted = Job::where('company_id', Auth::guard('company')->user()->id)->count();
+        if ($package_data->total_allowed_jobs == $total_jobs_posted) {
+            return redirect()
+                ->back()
+                ->with('error', 'You already have posted the maximum number of allowed jobs');
+        }
+
         $job_categories = jobCategory::orderBy('name', 'asc')->get();
         $job_locations = jobLocation::orderBy('name', 'asc')->get();
         $job_types = jobType::orderBy('name', 'asc')->get();
@@ -502,8 +539,8 @@ class CompanyController extends Controller
     public function job_delete($id)
     {
         Job::where('id', $id)->delete();
-        // CandidateApplication::where('job_id', $id)->delete();
-        // CandidateBookmark::where('job_id', $id)->delete();
+        CandidateApplication::where('job_id', $id)->delete();
+        CandidateBookmark::where('job_id', $id)->delete();
 
         return redirect()
             ->route('company_jobs')
