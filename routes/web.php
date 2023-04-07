@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\AdminJobSalaryRangeController;
 use App\Http\Controllers\Admin\AdminCompanyLocationController;
 use App\Http\Controllers\Admin\AdminCompanyIndustryController;
 use App\Http\Controllers\Admin\AdminCompanySizeController;
+use App\Http\Controllers\Admin\AdminCompanyController;
+use App\Http\Controllers\Admin\AdminCandidateController;
 
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\TermsController;
@@ -249,4 +251,16 @@ Route::middleware(['admin:admin'])->group(function () {
     Route::get('/admin/company-size/edit/{id}', [AdminCompanySizeController::class, 'edit'])->name('admin_company_size_edit');
     Route::post('/admin/company-size/update/{id}', [AdminCompanySizeController::class, 'update'])->name('admin_company_size_update');
     Route::get('/admin/company-size/delete/{id}', [AdminCompanySizeController::class, 'delete'])->name('admin_company_size_delete');
+
+    Route::get('/admin/companies', [AdminCompanyController::class, 'index'])->name('admin_companies');
+    Route::get('/admin/companies-details/{id}', [AdminCompanyController::class, 'companies_details'])->name('admin_companies_details');
+    Route::get('/admin/companies-jobs/{id}', [AdminCompanyController::class, 'companies_jobs'])->name('admin_companies_jobs');
+    Route::get('/admin/companies-applicants/{id}', [AdminCompanyController::class, 'companies_applicants'])->name('admin_companies_applicants');
+    Route::get('/admin/companies-applicant-resume/{id}', [AdminCompanyController::class, 'companies_applicant_resume'])->name('admin_companies_applicant_resume');
+    Route::get('/admin/companies-delete/{id}', [AdminCompanyController::class, 'delete'])->name('admin_companies_delete');
+
+    Route::get('/admin/candidates', [AdminCandidateController::class, 'index'])->name('admin_candidates');
+    Route::get('/admin/candidate-details/{id}', [AdminCandidateController::class, 'candidate_details'])->name('admin_candidate_details');
+    Route::get('/admin/candidate-applied-jobs/{id}', [AdminCandidateController::class, 'candidate_applied_jobs'])->name('admin_candidate_applied_jobs');
+    Route::get('/admin/candidate-delete/{id}', [AdminCandidateController::class, 'candidate_delete'])->name('admin_candidate_delete');
 });

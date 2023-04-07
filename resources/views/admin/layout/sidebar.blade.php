@@ -127,11 +127,19 @@
                 </a>
             </li>
 
-            <li class=""><a class="nav-link" href="table.html"><i class="fas fa-hand-point-right"></i>
-                    <span>Table</span></a></li>
+            <li class="{{ Request::is('admin/companies/*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin_companies') }}">
+                    <i class="fas fa-hand-point-right"></i>
+                    <span>Company Profile</span>
+                </a>
+            </li>
 
-            <li class=""><a class="nav-link" href="invoice.html"><i class="fas fa-hand-point-right"></i>
-                    <span>Invoice</span></a></li>
+            <li class="{{ Request::is('admin/candidates') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin_candidates') }}">
+                    <i class="fas fa-hand-point-right"></i>
+                    <span>Candidate Profile</span>
+                </a>
+            </li>
 
         </ul>
     </aside>
